@@ -1,0 +1,32 @@
+.virustotalGrapRow{
+width: 100%;
+display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+justify-content: space-between;
+.ant-space-item{
+    width: 49.5%;
+    align-items: center;
+    text-align: center;
+    .virustotalGrap{
+        width: 45%;
+    }
+    .virustotalGrapItem{
+        border: 1px solid #333;
+        padding: 20px 0;
+        position: relative;
+        .scoreGrap{
+            display: flex;
+            align-items: end;
+            position: absolute;
+            top: 45%;
+            right: 45%;
+        }
+        .virustotalGrapItem_hover{
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+}
+}

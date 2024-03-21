@@ -1,0 +1,17 @@
+.ruleModal {
+    width: 1200px !important;
+    .ant-modal-content{
+        padding: 10px;
+        overflow-y: auto;
+        .ant-modal-body{
+            margin-top: 20px;
+           }
+    }
+    
+    .commonInfRow-col{
+        display: flex;
+        padding: 5px 20px;
+        border: 1px solid #b3b0b0;
+        background-color: #ebf4fc;
+    }
+}
