@@ -13,6 +13,12 @@ const SampleApi = {
     },
     getByHash: (hash) => {
         return DMWAxiosClient.get(`/getsample/${hash}`);
+    },
+    analysSample: (data) => {
+        return DMWAxiosClient('/analysis/',{
+            method: 'POST',
+            data
+        })
     }
 }
 

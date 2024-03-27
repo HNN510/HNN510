@@ -17,16 +17,16 @@ function Main() {
         </>
       ),
     },
-    {
-      key: "2",
-      label: "Tab 2",
-      children: "Content of Tab Pane 2",
-    },
-    {
-      key: "3",
-      label: "Tab 3",
-      children: "Content of Tab Pane 3",
-    },
+    // {
+    //   key: "2",
+    //   label: "Tab 2",
+    //   children: "Content of Tab Pane 2",
+    // },
+    // {
+    //   key: "3",
+    //   label: "Tab 3",
+    //   children: "Content of Tab Pane 3",
+    // },
   ];
 
   return (

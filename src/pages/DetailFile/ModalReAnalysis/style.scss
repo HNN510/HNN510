@@ -1,0 +1,10 @@
+.ant-modal-wrap > .modaldetected{
+    width: 600px !important;
+    .ant-modal-content{
+        padding-bottom: 4px;
+    }
+    .ant-modal-content > .ant-modal-body{
+        text-align: left;
+        margin-top: 30px;
+    }
+}

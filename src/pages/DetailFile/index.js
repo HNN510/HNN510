@@ -1,21 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { ReactComponent as CirleIcon } from "../../assets/svg/circle.svg";
 import { ReactComponent as DllIcon } from "../../assets/svg/dll.svg";
 import { ReactComponent as ExeIcon } from "../../assets/svg/exe.svg";
 import moment from "moment";
 import Typography from "antd/es/typography/Typography";
-import { Button, Divider, Row, Space, Col, Spin, Image } from "antd";
+import { Button, Divider, Row, Space, Col, Spin } from "antd";
 import "./style.scss";
 import VirustotalGrap from "./VirutotalGrap";
-import { useLocation, useParams } from "react-router-dom";
-import image from "../../assets/images/8019228.webp";
+import { useLocation } from "react-router-dom";
+import ModalReAnalysis from "./ModalReAnalysis";
 const DetailFile = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { state } = location;
-  console.log(state);
   const renderCircle = (score, status) => {
     let color = "";
-    console.log(status);
     if (status === "done") {
       if (score >= 0 && score <= 50) {
         color = "#39ac4c";
@@ -48,6 +47,9 @@ const DetailFile = (props) => {
       </div>
     );
   };
+  const handleReAnalysis = () => {
+    setIsOpen(true);
+  }
   return (
     <div style={{ padding: "15px 100px" }}>
       <div
@@ -62,7 +64,14 @@ const DetailFile = (props) => {
           {state.detailSample.status === "not analysis" ? (
             <Button>Phân tích</Button>
           ) : (
-            <Button>Phân tích lại</Button>
+            <>
+              <Button onClick={handleReAnalysis}>Phân tích lại</Button>
+              <ModalReAnalysis
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                detailSample={state.detailSample}
+              />
+            </>
           )}
         </div>
         <div

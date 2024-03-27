@@ -1,18 +1,21 @@
-import { Button, Collapse, Space } from "antd";
+import { Space } from "antd";
 import Typography from "antd/es/typography/Typography";
 import { Circle } from "rc-progress";
 import React, { useState } from "react";
 import "./style.scss";
 import VirustotalModal from "./component/virusTotalModal";
 import RuleModal from "./component/ruleModal";
-import iamge from "../../../assets/images/8019228.webp";
+import { ReactComponent as WarningIcon } from "../../../assets/svg/warning.svg";
+import "../../../assets/images/8019228.webp";
 const VirustotalGrap = (props) => {
   const { data } = props;
-  console.log("data grap", data);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenRule, setIsOpenRule] = useState(false);
   const handleDetailVirustotal = () => {
     setIsOpen(true);
+    if (Object.keys(data.result.virustotal).length === 0) {
+      setIsOpen(false);
+    }
   };
   const handleDetailRule = () => {
     setIsOpenRule(true);
@@ -28,12 +31,20 @@ const VirustotalGrap = (props) => {
     }
     return color;
   };
+  const checkObjectGrapUndefine =
+    !data.result.virustotal &&
+    !data.result.rule &&
+    !data.result.ai_static &&
+    !data.result.ai_dynamic;
   return (
     <div style={{ marginTop: "30px" }}>
       <Space direction="horizontal" className="virustotalGrapRow">
         {data.result.virustotal ? (
           <div className="virustotalGrapItem">
-            <div onClick={handleDetailVirustotal} className="virustotalGrapItem_hover">
+            <div
+              onClick={handleDetailVirustotal}
+              className="virustotalGrapItem_hover"
+            >
               <Typography
                 style={{
                   color: "#000",
@@ -43,24 +54,58 @@ const VirustotalGrap = (props) => {
               >
                 Virustotal
               </Typography>
-              <Circle
-                percent={(data.result.virustotal.positives/data.result.virustotal.total*100).toFixed(0)}
-                strokeWidth={5}
-                trailWidth={5}
-                strokeColor={renderColor((data.result.virustotal.positives/data.result.virustotal.total*100).toFixed(0))}
-                className="virustotalGrap"
-              />
-            </div>
-            <div className="scoreGrap">
-              <Typography
-                className="scoreGrap_number"
-                style={{ color: renderColor((data.result.virustotal.positives/data.result.virustotal.total*100).toFixed(0)), fontSize: "2rem" }}
+              <div
+                className="virustotalGrapItem-content"
+                style={{ width: "100%" }}
               >
-                {data.result.virustotal.positives}
-              </Typography>
-              <Typography>/</Typography>
-              <Typography>{data.result.virustotal.total}</Typography>
+                {Object.keys(data.result.virustotal).length === 0 ? (
+                  <div>
+                    <WarningIcon style={{ width: "250px", height: "270px" }} />
+                    <Typography>Hash not found</Typography>
+                  </div>
+                ) : (
+                  <>
+                    <Circle
+                      percent={(
+                        (data.result.virustotal.positives /
+                          data.result.virustotal.total) *
+                        100
+                      ).toFixed(0)}
+                      strokeWidth={5}
+                      trailWidth={5}
+                      strokeColor={renderColor(
+                        (
+                          (data.result.virustotal.positives /
+                            data.result.virustotal.total) *
+                          100
+                        ).toFixed(0)
+                      )}
+                      className="virustotalGrap"
+                    />
+                    <div className="scoreGrap">
+                      <Typography
+                        className="scoreGrap_number"
+                        style={{
+                          color: renderColor(
+                            (
+                              (data.result.virustotal.positives /
+                                data.result.virustotal.total) *
+                              100
+                            ).toFixed(0)
+                          ),
+                          fontSize: "2rem",
+                        }}
+                      >
+                        {data.result.virustotal.positives}
+                      </Typography>
+                      <Typography>/</Typography>
+                      <Typography>{data.result.virustotal.total}</Typography>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
+
             <VirustotalModal
               isOpen={isOpen}
               setIsOpen={setIsOpen}
@@ -73,7 +118,10 @@ const VirustotalGrap = (props) => {
 
         {data.result.rule ? (
           <div className="virustotalGrapItem">
-            <div onClick={handleDetailRule} className="virustotalGrapItem_hover">
+            <div
+              onClick={handleDetailRule}
+              className="virustotalGrapItem_hover"
+            >
               <Typography
                 style={{
                   color: "#000",
@@ -95,7 +143,10 @@ const VirustotalGrap = (props) => {
             <div className="scoreGrap">
               <Typography
                 className="scoreGrap_number"
-                style={{ color: renderColor(data.result.rule.score), fontSize: "2rem" }}
+                style={{
+                  color: renderColor(data.result.rule.score),
+                  fontSize: "2rem",
+                }}
               >
                 {data.result.rule.score}
               </Typography>
@@ -132,7 +183,10 @@ const VirustotalGrap = (props) => {
             <div className="scoreGrap">
               <Typography
                 className="scoreGrap_number"
-                style={{ color: renderColor(data.result.ai_static), fontSize: "2rem" }}
+                style={{
+                  color: renderColor(data.result.ai_static),
+                  fontSize: "2rem",
+                }}
               >
                 {data.result.ai_static.toFixed(0)}
               </Typography>
@@ -165,7 +219,10 @@ const VirustotalGrap = (props) => {
             <div className="scoreGrap">
               <Typography
                 className="scoreGrap_number"
-                style={{ color: renderColor(data.result.ai_dynamic), fontSize: "2rem" }}
+                style={{
+                  color: renderColor(data.result.ai_dynamic),
+                  fontSize: "2rem",
+                }}
               >
                 {data.result.ai_dynamic.toFixed(0)}
               </Typography>
@@ -175,6 +232,14 @@ const VirustotalGrap = (props) => {
           </div>
         ) : (
           <></>
+        )}
+        {checkObjectGrapUndefine && (
+          <div style={{width: "100%", textAlign: 'center'}}>
+            <img
+              src="https://cdni.iconscout.com/illustration/premium/thumb/no-data-found-8867280-7265556.png?f=webp"
+              alt="image not data grap"
+            />
+          </div>
         )}
       </Space>
     </div>

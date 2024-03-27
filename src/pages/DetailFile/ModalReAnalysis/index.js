@@ -2,19 +2,18 @@ import { Button, Modal, Select, Space, message } from "antd";
 import Typography from "antd/es/typography/Typography";
 import React, { useState } from "react";
 import "./style.scss";
-import SampleApi from "../../../../../apis/sample";
+import SampleApi from "../../../apis/sample";
 
-const ModalDetected = (props) => {
-  const { isOpen, dataDetected, setIsOpen } = props;
+const ModalReAnalysis = (props) => {
+  const { isOpen, detailSample, setIsOpen } = props;
   const [analsMode, setAnalsMode] = useState("auto");
   const [isLoading, setIsLoading] = useState(false);
-
   const handleChange = (value) => {
     setAnalsMode(value);
   };
   const handleAnals = async () => {
     const dataAnalysis = {
-      hash_file: dataDetected.hash,
+      hash_file: detailSample.hash,
       mode_run: [analsMode],
     };
     setIsLoading(true);
@@ -23,9 +22,7 @@ const ModalDetected = (props) => {
       if (res.status === 200) {
         message.success("Phân tích thành công");
         setIsOpen(false);
-      } else {
-        message.error("Phân tích thất bại");
-      }
+      } else message.error("Phân tích thất bại");
       setIsLoading(false);
     } catch (error) {
       message.error("Phân tích thất bại");
@@ -38,14 +35,7 @@ const ModalDetected = (props) => {
       open={isOpen}
       onCancel={() => setIsOpen(false)}
       className="modaldetected"
-    >
-      <Typography>{dataDetected.hash}</Typography>
-      <Typography>Nền tảng: {dataDetected.mode}</Typography>
-      <Typography>Loại: {dataDetected.type}</Typography>
-      <Typography>Entropy: {dataDetected.entropy_score}</Typography>
-      <Typography>
-        Packer: {dataDetected.is_packed ? "Đã pack" : "Chưa pack"}
-      </Typography>
+    >      
       <div style={{ display: "flex", alignItems: "center" }}>
         <Typography>Kiểu phân tích</Typography>
         <Select
@@ -53,7 +43,7 @@ const ModalDetected = (props) => {
           style={{ width: 200, marginLeft: "20px" }}
           onChange={handleChange}
         >
-          {dataDetected.run_mode?.map((item) => (
+          {detailSample.run_mode?.map((item) => (
             <Select.Option value={item}>{item}</Select.Option>
           ))}
         </Select>
@@ -64,11 +54,11 @@ const ModalDetected = (props) => {
           Hủy
         </Button>
         <Button type="primary" size="small" onClick={handleAnals} loading={isLoading}>
-          Phân tích
+          Xác nhận
         </Button>
       </Space>
     </Modal>
   );
 };
 
-export default ModalDetected;
+export default ModalReAnalysis;
