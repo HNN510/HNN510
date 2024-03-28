@@ -5,7 +5,7 @@ import "./style.scss";
 import SampleApi from "../../../apis/sample";
 
 const ModalReAnalysis = (props) => {
-  const { isOpen, detailSample, setIsOpen } = props;
+  const { isOpen, detailSample, setIsOpen, title } = props;
   const [analsMode, setAnalsMode] = useState("auto");
   const [isLoading, setIsLoading] = useState(false);
   const handleChange = (value) => {
@@ -35,6 +35,7 @@ const ModalReAnalysis = (props) => {
       open={isOpen}
       onCancel={() => setIsOpen(false)}
       className="modaldetected"
+      title={title}
     >      
       <div style={{ display: "flex", alignItems: "center" }}>
         <Typography>Kiểu phân tích</Typography>

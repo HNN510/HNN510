@@ -15,6 +15,7 @@ const DetailFile = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [detailSample, setDetailSample] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [titleAnalysis, setTitleAnalysis] = useState("");
   const { hash } = useParams();
   const navigate = useNavigate();
   const fetchDataSample = async () => {
@@ -69,7 +70,8 @@ const DetailFile = (props) => {
       </div>
     );
   };
-  const handleReAnalysis = () => {
+  const handleReAnalysis = (title) => {
+    setTitleAnalysis(title);
     setIsOpen(true);
   };
   const handleDeleteSample = () => {
@@ -81,7 +83,7 @@ const DetailFile = (props) => {
           const res = await SampleApi.deleteSample(detailSample.hash);
           if (res.status === 200) {
             message.success("Xóa thành công");
-            navigate('/');
+            navigate("/");
           } else message.error("Xóa thất bại");
         } catch (error) {
           message.error("Xóa thất bại");
@@ -102,17 +104,22 @@ const DetailFile = (props) => {
             <div className="headerDetail-Score" style={{ marginRight: "30px" }}>
               {renderCircle(detailSample.result?.score, detailSample.status)}
               {detailSample.status === "not analysis" ? (
-                <Button>Phân tích</Button>
+                <Button onClick={() => handleReAnalysis("Phân tích")}>
+                  Phân tích
+                </Button>
               ) : (
                 <>
-                  <Button onClick={handleReAnalysis}>Phân tích lại</Button>
-                  <ModalReAnalysis
-                    isOpen={isOpen}
-                    setIsOpen={setIsOpen}
-                    detailSample={detailSample}
-                  />
+                  <Button onClick={() => handleReAnalysis("Phân tích lại")}>
+                    Phân tích lại
+                  </Button>
                 </>
               )}
+              <ModalReAnalysis
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                detailSample={detailSample}
+                title={titleAnalysis}
+              />
             </div>
             <div
               className="headerDetail-inf"
