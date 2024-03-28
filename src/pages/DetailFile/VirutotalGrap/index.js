@@ -32,14 +32,14 @@ const VirustotalGrap = (props) => {
     return color;
   };
   const checkObjectGrapUndefine =
-    !data.result.virustotal &&
-    !data.result.rule &&
-    !data.result.ai_static &&
-    !data.result.ai_dynamic;
+    !data.result?.virustotal &&
+    !data.result?.rule &&
+    !data.result?.ai_static &&
+    !data.result?.ai_dynamic;
   return (
     <div style={{ marginTop: "30px" }}>
       <Space direction="horizontal" className="virustotalGrapRow">
-        {data.result.virustotal ? (
+        {data.result?.virustotal ? (
           <div className="virustotalGrapItem">
             <div
               onClick={handleDetailVirustotal}
@@ -116,7 +116,7 @@ const VirustotalGrap = (props) => {
           <></>
         )}
 
-        {data.result.rule ? (
+        {data.result?.rule ? (
           <div className="virustotalGrapItem">
             <div
               onClick={handleDetailRule}
@@ -162,7 +162,7 @@ const VirustotalGrap = (props) => {
         ) : (
           <></>
         )}
-        {data.result.ai_static ? (
+        {data.result?.ai_static ? (
           <div className="virustotalGrapItem">
             <Typography
               style={{
@@ -198,7 +198,7 @@ const VirustotalGrap = (props) => {
           <></>
         )}
 
-        {data.result.ai_dynamic ? (
+        {data.result?.ai_dynamic ? (
           <div className="virustotalGrapItem">
             <Typography
               style={{

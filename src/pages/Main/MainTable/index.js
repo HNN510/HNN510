@@ -1,9 +1,9 @@
 import { Pagination, Table, message, Space, Tag } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import SampleApi from "../../../apis/sample";
 import { useNavigate } from "react-router-dom";
 
-const MainTable = () => {
+const MainTable = forwardRef((props, ref) => {
   const [dataTable, setDataTable] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -21,6 +21,9 @@ const MainTable = () => {
     pageSize: 10,
     onChange: handleChangePage,
   };
+  useImperativeHandle(ref, () => ({
+     reFetch: fetchData
+  }));
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -35,8 +38,8 @@ const MainTable = () => {
     }
   };
   const handleRowClick = (record) => {
-      navigate(`/file/${record.hash}`, {state: {detailSample: record}});
-  }
+    navigate(`/file/${record.hash}`);
+  };
   useEffect(() => {
     fetchData();
   }, [params]);
@@ -86,5 +89,5 @@ const MainTable = () => {
       </Space>
     </div>
   );
-};
+});
 export default MainTable;

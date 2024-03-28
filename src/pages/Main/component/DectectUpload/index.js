@@ -5,7 +5,7 @@ import { ReactComponent as UploadIcon } from "../../../../assets/svg/uploadIcon.
 import SampleApi from "../../../../apis/sample";
 import ModalDetected from "./ModalDetected";
 
-function UploadFileDetect() {
+const UploadFileDetect = ({refetch}) => {
   const [fileList, setFileList] = useState([]);
   const [dataDetected, setDataDetected] = useState({});
   const [isOpen, setIsOpen] = useState(false);
@@ -70,6 +70,7 @@ function UploadFileDetect() {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         dataDetected={dataDetected}
+        refetch={refetch}
       />
     </Space>
   );

@@ -19,6 +19,17 @@ const SampleApi = {
             method: 'POST',
             data
         })
+    },
+    downloadSample: (hash) => {
+        return DMWAxiosClient(`/download_sample/${hash}`,{
+            method: 'GET',
+            responseType: 'arraybuffer'
+        })
+    },
+    deleteSample: (hash) => {
+        return DMWAxiosClient(`/deletesample/${hash}`,{
+            method: 'DELETE',
+        })
     }
 }
 

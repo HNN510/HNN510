@@ -5,7 +5,7 @@ import "./style.scss";
 import SampleApi from "../../../../../apis/sample";
 
 const ModalDetected = (props) => {
-  const { isOpen, dataDetected, setIsOpen } = props;
+  const { isOpen, dataDetected, setIsOpen, refetch } = props;
   const [analsMode, setAnalsMode] = useState("auto");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,16 +27,22 @@ const ModalDetected = (props) => {
         message.error("Phân tích thất bại");
       }
       setIsLoading(false);
+      refetch();
     } catch (error) {
       message.error("Phân tích thất bại");
       setIsLoading(false);
+      refetch();
     }
   };
+  const handleCancel = () => {
+    setIsOpen(false);
+    refetch();
+  }
   return (
     <Modal
       footer={false}
       open={isOpen}
-      onCancel={() => setIsOpen(false)}
+      onCancel={handleCancel}
       className="modaldetected"
     >
       <Typography>{dataDetected.hash}</Typography>
@@ -60,7 +66,7 @@ const ModalDetected = (props) => {
       </div>
 
       <Space style={{ display: "flex", justifyContent: "end" }}>
-        <Button size="small" onClick={() => setIsOpen(false)}>
+        <Button size="small" onClick={handleCancel}>
           Hủy
         </Button>
         <Button type="primary" size="small" onClick={handleAnals} loading={isLoading}>
